@@ -1,0 +1,6 @@
+image_manifest_digest=sha256:1be80cc031999af5a8c5425f0d9e526fff90f48075ffb176294787ec5c761709
+config_digest=sha256:4d4012ecfda60c5e7f99d671a8a46c4f1069c6c15d09dc529dad3cbd3ee4e6d2
+tag=readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r6
+probe_port=8080
+probe_path=/health
+probe_timeout=180

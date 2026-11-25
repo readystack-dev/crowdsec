@@ -1,0 +1,80 @@
+{
+  "schema": "kitforge.build_recipe.v1",
+  "slug": "crowdsec",
+  "image": "readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r6",
+  "build_method": "source-rebuild-go",
+  "source": {
+    "repo": "https://github.com/crowdsecurity/crowdsec",
+    "ref": "v1.8.2",
+    "builder_image": "golang:1.27.4-bookworm",
+    "go_module_root": "github.com/crowdsecurity/crowdsec",
+    "go_version_required": "1.27.1",
+    "multi_module": false,
+    "git_sha": "6322745",
+    "_version_note": "v1.7.8 is the LATEST CrowdSec GA (queue-latest-version policy, owner 2026-06-25); LIVE-VERIFIED on <redacted: internal host> (clone --depth 1 --branch v1.7.8, short sha 6322745). SINGLE Go module github.com/crowdsecurity/crowdsec (confirmed: NO go.work, NO sub-module replace-directives - both product binaries build from the repo ROOT by package path: `go build ./cmd/crowdsec` and `go build ./cmd/crowdsec-cli`). NOT multi_module (unlike etcd). TOOLCHAIN: go.mod `go 1.26.1` (no toolchain directive); golang:1.26-bookworm ships go1.26.4 (>= 1.26.1) so GOTOOLCHAIN=local compiles with ZERO toolchain download - matches the --network=none offline promise. GOWORK=off is a harmless no-op (no go.work). Version symbols are stamped via -ldflags -X (see binaries_from_source.ldflags): Version lives in the EXTERNAL module github.com/crowdsecurity/go-cs-lib/version; Codename + the defaultConfigDir/defaultDataDir path defaults live in github.com/crowdsecurity/crowdsec/pkg/cwversion + pkg/csconfig. Makefile defaults captured from build/mk/platform/unix_common.mk: BUILD_VERSION=`git describe --tags`=v1.7.8, BUILD_CODENAME=alphaga, DEFAULT_CONFIGDIR=/etc/crowdsec, DEFAULT_DATADIR=/var/lib/crowdsec/data.",
+    "build_env": {
+      "CGO_ENABLED": "0",
+      "GOOS": "linux",
+      "GOARCH": "amd64",
+      "GOTOOLCHAIN": "local",
+      "GOFLAGS": "-buildvcs=false",
+      "GOWORK": "off"
+    },
+    "vendor_build": null,
+    "_no_vendor_build_note": "CrowdSec ships NO web UI / dashboard / embedded frontend (the LAPI is API-only; zero go:embed of generated assets) - a plain per-package `go build` produces complete binaries. NO Node/npm asset step (the prometheus/grafana embed pattern does NOT apply); source.vendor_build is intentionally OMITTED (null).",
+    "_cgo_decision_note": "CGO_ENABLED=0 - DELIBERATE pure-Go selection, LIVE-VERIFIED static. CrowdSec's go.mod lists BOTH github.com/mattn/go-sqlite3 (v1.14.44, needs CGO=1 + gcc - the upstream DEFAULT `BUILD_SQLITE=mattn`) AND modernc.org/sqlite (v1.50.0, pure-Go). The DEFAULT upstream build is ALSO CGO for regex: BUILD_RE2_WASM=0 links the C++ libre2 library (tag re2_cgo) and `make BUILD_STATIC=1` requires a hand-built libre2.a. To get a clean CGO-free static binary we set BOTH pure-Go switches: BUILD_SQLITE=modernc (adds tag `sqlite_modernc`) + BUILD_RE2_WASM=1 (the WASM wazero regex engine, which is the build-tag DEFAULT achieved by simply NOT setting re2_cgo). `crowdsec -version` confirmed `libre2: WebAssembly` and the binary is `not a dynamic executable`. Upstream NOTE: the modernc sqlite backend is slower than mattn and 'not meant for production' per their Makefile $(info) - a PERFORMANCE caveat, not a correctness/security one; for a CE LAPI single-container with a local sqlite decision store it is the correct trade (fully static, no C deps, cleanest SBOM). A future high-throughput SKU could switch to cgo_enabled:1 + mattn + a vendored static libre2 if Scout/perf demands it.",
+    "_offline_vendor_note": "Single root `go mod vendor` is sufficient (single module). `go mod vendor` is build-tag-conservative - it vendors packages imported under ANY build tag, so BOTH modernc.org/sqlite (+ modernc.org/libc) and the wazero WASM-re2 deps land in vendor/ even though only the sqlite_modernc/no-re2_cgo configuration compiles. The offline build stage then runs `go build -mod=vendor -tags 'netgo,osusergo,expr_debug,nomsgpack,sqlite_modernc'` with CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off GOPROXY=off.",
+    "source_date_epoch": 1795543176,
+    "source_date_epoch_provenance": "the time release v1.8.2-CE-ubuntu24.04-r6 was cut (2026-11-24T17:59:36Z), by scripts/rerelease-agenda.py: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 3d369d64eb3e, dated 2026-10-26T08:19:30Z (source.commit_epoch).",
+    "commit": "3d369d64eb3e9ba770ed39aedc83ffd3170aef4c",
+    "source_date_epoch_basis": "release-cut",
+    "commit_epoch": 1793002770
+  },
+  "binaries_from_source": [
+    {
+      "name": "crowdsec",
+      "main_pkg": "./cmd/crowdsec",
+      "cgo_enabled": 0,
+      "build_tags": [
+        "netgo",
+        "osusergo",
+        "expr_debug",
+        "nomsgpack",
+        "sqlite_modernc"
+      ],
+      "build_flags": [
+        "-trimpath",
+        "-buildvcs=false"
+      ],
+      "ldflags": "-s -w -X github.com/crowdsecurity/go-cs-lib/version.Version=v@VERSION_BARE@ -X github.com/crowdsecurity/go-cs-lib/version.Tag=@COMMIT:7@ -X github.com/crowdsecurity/crowdsec/pkg/cwversion.Codename=alphaga -X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultConfigDir=/etc/crowdsec -X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultDataDir=/var/lib/crowdsec/data",
+      "out_path": "/usr/bin/crowdsec",
+      "verify_subcmd": "-version",
+      "_note": "PRIMARY binary - the agent+LAPI server (run as LAPI-only via the `-no-cs` entrypoint flag). main_pkg ./cmd/crowdsec (cmd/crowdsec/crowdsec.go has main). Build tags = upstream's GO_TAGS for the pure-Go path: netgo,osusergo,expr_debug,nomsgpack (always) + sqlite_modernc (BUILD_SQLITE=modernc) and NO re2_cgo (BUILD_RE2_WASM=1, the WASM default). ldflags mirror the upstream Makefile LD_OPTS_VARS (-X paths verified in build/mk + Makefile); Version is stamped into the EXTERNAL go-cs-lib/version module, Tag=short sha 6322745, Codename=alphaga, and the config/data dir DEFAULTS baked so a flagless `crowdsec` finds /etc/crowdsec + /var/lib/crowdsec/data. LIVE: 77MB static stripped ELF; `crowdsec -version` => v1.7.8-6322745, libre2: WebAssembly. verify_subcmd `-version` (single dash, Go flag)."
+    },
+    {
+      "name": "cscli",
+      "main_pkg": "./cmd/crowdsec-cli",
+      "cgo_enabled": 0,
+      "build_tags": [
+        "netgo",
+        "osusergo",
+        "expr_debug",
+        "nomsgpack",
+        "sqlite_modernc"
+      ],
+      "build_flags": [
+        "-trimpath",
+        "-buildvcs=false"
+      ],
+      "ldflags": "-s -w -X github.com/crowdsecurity/go-cs-lib/version.Version=v@VERSION_BARE@ -X github.com/crowdsecurity/go-cs-lib/version.Tag=@COMMIT:7@ -X github.com/crowdsecurity/crowdsec/pkg/cwversion.Codename=alphaga -X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultConfigDir=/etc/crowdsec -X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultDataDir=/var/lib/crowdsec/data",
+      "out_path": "/usr/bin/cscli",
+      "verify_subcmd": "version",
+      "_note": "The CrowdSec admin CLI (the handbook/operator binary - the sqlite3-CLI parity slot). main_pkg ./cmd/crowdsec-cli (cmd/crowdsec-cli/main.go). Operators exec it inside the container to register bouncers (`cscli bouncers add <name>`), register pushing agents (`cscli machines add <name> --auto`), inspect/insert decisions (`cscli decisions ...`), and (if THEY have network) `cscli hub update` + install collections. Same pure-Go tags/ldflags as crowdsec. LIVE: 76MB static stripped ELF; `cscli version` => v1.7.8-6322745. verify_subcmd `version` (subcommand, no dash)."
+    }
+  ],
+  "runtime_packages": [
+    "ca-certificates",
+    "curl",
+    "tzdata"
+  ]
+}

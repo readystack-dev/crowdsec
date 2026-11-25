@@ -1,0 +1,42 @@
+# ReadyStack CrowdSec Local API (LAPI) single-container config.
+# Run as `crowdsec -c /etc/crowdsec/config.yaml -no-cs` (the detection agent is
+# disabled; this container IS the LAPI decision store + its embedded sqlite DB).
+# Container-hardened from the upstream config/config.yaml: foreground + stdout
+# logging, listens on all interfaces, Central API (CAPI) left OFF for a fully
+# offline boot. Mount /var/lib/crowdsec to persist the decision database.
+common:
+  daemonize: false
+  log_media: stdout
+  log_level: info
+config_paths:
+  config_dir: /etc/crowdsec/
+  data_dir: /var/lib/crowdsec/data/
+  simulation_path: /etc/crowdsec/simulation.yaml
+  hub_dir: /etc/crowdsec/hub/
+  index_path: /etc/crowdsec/hub/.index.json
+  notification_dir: /etc/crowdsec/notifications/
+  plugin_dir: /usr/local/lib/crowdsec/plugins/
+db_config:
+  log_level: info
+  type: sqlite
+  db_path: /var/lib/crowdsec/data/crowdsec.db
+  flush:
+    max_items: 5000
+    max_age: 7d
+api:
+  client:
+    insecure_skip_verify: false
+    credentials_path: /etc/crowdsec/local_api_credentials.yaml
+  server:
+    enable: true
+    log_level: info
+    listen_uri: 0.0.0.0:8080
+    profiles_path: /etc/crowdsec/profiles.yaml
+    trusted_ips:
+      - 127.0.0.1
+      - ::1
+prometheus:
+  enabled: true
+  level: full
+  listen_addr: 0.0.0.0
+  listen_port: 6060

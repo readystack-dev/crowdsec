@@ -1,0 +1,9 @@
+{
+  "schema": "kitforge.source_tree_hash.v1",
+  "slug": "crowdsec",
+  "repo": "https://github.com/crowdsecurity/crowdsec",
+  "ref": "v1.8.2",
+  "commit": "3d369d64eb3e9ba770ed39aedc83ffd3170aef4c",
+  "tree_listing_sha256": "4ca9779ee0d54141de4f965230df7ff5791cc3f937a66c6ecc4e202894ca870f",
+  "file_count": 1795
+}

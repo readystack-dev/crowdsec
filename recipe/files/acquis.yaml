@@ -1,0 +1,14 @@
+# Acquisition (log sources) for the CrowdSec AGENT. In this LAPI-only container
+# (`-no-cs`) the agent is NOT running, so this file is inert and ships empty.
+# To run a detection agent, deploy a SEPARATE crowdsec container/host with its
+# datasources here and point its api.client at this LAPI. Examples:
+# ---
+# filenames:
+#   - /var/log/nginx/*.log
+# labels:
+#   type: nginx
+# ---
+# filenames:
+#   - /var/log/auth.log
+# labels:
+#   type: syslog
