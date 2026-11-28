@@ -1,7 +1,7 @@
 {
   "schema": "kitforge.build_recipe.v1",
   "slug": "crowdsec",
-  "image": "readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r6",
+  "image": "readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r7",
   "build_method": "source-rebuild-go",
   "source": {
     "repo": "https://github.com/crowdsecurity/crowdsec",
@@ -24,8 +24,8 @@
     "_no_vendor_build_note": "CrowdSec ships NO web UI / dashboard / embedded frontend (the LAPI is API-only; zero go:embed of generated assets) - a plain per-package `go build` produces complete binaries. NO Node/npm asset step (the prometheus/grafana embed pattern does NOT apply); source.vendor_build is intentionally OMITTED (null).",
     "_cgo_decision_note": "CGO_ENABLED=0 - DELIBERATE pure-Go selection, LIVE-VERIFIED static. CrowdSec's go.mod lists BOTH github.com/mattn/go-sqlite3 (v1.14.44, needs CGO=1 + gcc - the upstream DEFAULT `BUILD_SQLITE=mattn`) AND modernc.org/sqlite (v1.50.0, pure-Go). The DEFAULT upstream build is ALSO CGO for regex: BUILD_RE2_WASM=0 links the C++ libre2 library (tag re2_cgo) and `make BUILD_STATIC=1` requires a hand-built libre2.a. To get a clean CGO-free static binary we set BOTH pure-Go switches: BUILD_SQLITE=modernc (adds tag `sqlite_modernc`) + BUILD_RE2_WASM=1 (the WASM wazero regex engine, which is the build-tag DEFAULT achieved by simply NOT setting re2_cgo). `crowdsec -version` confirmed `libre2: WebAssembly` and the binary is `not a dynamic executable`. Upstream NOTE: the modernc sqlite backend is slower than mattn and 'not meant for production' per their Makefile $(info) - a PERFORMANCE caveat, not a correctness/security one; for a CE LAPI single-container with a local sqlite decision store it is the correct trade (fully static, no C deps, cleanest SBOM). A future high-throughput SKU could switch to cgo_enabled:1 + mattn + a vendored static libre2 if Scout/perf demands it.",
     "_offline_vendor_note": "Single root `go mod vendor` is sufficient (single module). `go mod vendor` is build-tag-conservative - it vendors packages imported under ANY build tag, so BOTH modernc.org/sqlite (+ modernc.org/libc) and the wazero WASM-re2 deps land in vendor/ even though only the sqlite_modernc/no-re2_cgo configuration compiles. The offline build stage then runs `go build -mod=vendor -tags 'netgo,osusergo,expr_debug,nomsgpack,sqlite_modernc'` with CGO_ENABLED=0 GOTOOLCHAIN=local GOWORK=off GOPROXY=off.",
-    "source_date_epoch": 1795543176,
-    "source_date_epoch_provenance": "the time release v1.8.2-CE-ubuntu24.04-r6 was cut (2026-11-24T17:59:36Z), by scripts/rerelease-agenda.py: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 3d369d64eb3e, dated 2026-10-26T08:19:30Z (source.commit_epoch).",
+    "source_date_epoch": 1795672783,
+    "source_date_epoch_provenance": "the time release v1.8.2-CE-ubuntu24.04-r7 was cut (2026-11-26T05:59:43Z), by scripts/rerelease-agenda.py: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 3d369d64eb3e, dated 2026-10-26T08:19:30Z (source.commit_epoch).",
     "commit": "3d369d64eb3e9ba770ed39aedc83ffd3170aef4c",
     "source_date_epoch_basis": "release-cut",
     "commit_epoch": 1793002770

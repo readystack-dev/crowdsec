@@ -1,14 +1,16 @@
-# Build kit for `readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r6`
+# Build kit for `readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r7`
 
-This archive rebuilds the linux/amd64 image `readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r6` from its own contents, with the network off, and checks the result against the image digest ReadyStack published, `sha256:1be80cc031999af5a8c5425f0d9e526fff90f48075ffb176294787ec5c761709` (also in `TARGET_DIGEST.txt`). It holds everything the build needs, not the image itself.
+This archive rebuilds the linux/amd64 image `readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r7` from its own contents, with the network off, and checks the result against the image digest ReadyStack published, `sha256:507e3baa7d02303f47b4d5e8af70451ce47bcd454bb1775f9fed167cf2de30cb` (also in `TARGET_DIGEST.txt`). It holds everything the build needs, not the image itself.
+
+Every release of this kit, its recipe and its defect issues are published at https://github.com/readystack-dev/crowdsec; the product page is https://readystack.dev/products/crowdsec.
 
 ## Rebuild it
 
 You need linux/amd64 Docker with `buildx` 0.30 or later, `jq` and `tar` (docs/REBUILD.md lists the rest, if any, and the hardware ReadyStack used).
 
 ```
-tar -xpzf ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r6.tar.gz    # -p keeps each file's mode
-cd v1.8.2-CE-ubuntu24.04-r6
+tar -xpzf ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r7.tar.gz    # -p keeps each file's mode
+cd v1.8.2-CE-ubuntu24.04-r7
 ./BUILD_OFFLINE.sh            # builds with the network off, from this archive alone
 ./VERIFY_OFFLINE.sh           # compares the rebuilt digest with the published one, then checks the image
 ```
@@ -23,8 +25,8 @@ ReadyStack signs this archive's `rebuild.json` with its release key once the fin
 
 ```
 curl -fsSLo ../cosign.pub https://readystack.dev/keys/cosign.pub
-curl -fsSLo ../ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r6.rebuild.json.sigstore https://readystack.dev/api/kit/crowdsec/v1.8.2-CE-ubuntu24.04-r6/files/ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r6.rebuild.json.sigstore
-python3 docs/rebuild-bundle/rebuild_bundle.py validate . --key ../cosign.pub --signature ../ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r6.rebuild.json.sigstore
+curl -fsSLo ../ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r7.rebuild.json.sigstore https://readystack.dev/api/kit/crowdsec/v1.8.2-CE-ubuntu24.04-r7/files/ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r7.rebuild.json.sigstore
+python3 docs/rebuild-bundle/rebuild_bundle.py validate . --key ../cosign.pub --signature ../ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r7.rebuild.json.sigstore
 ```
 
 `validate` needs Python 3 and cosign. Without building anything it checks the signature over `rebuild.json`, every file's checksum, the tree hash over every file's path, mode and content, each base image layout's digest and the builder archive. `verify`, with the same arguments, also rebuilds with the builder's network egress blocked and exits 0 only when the rebuilt digest is the published one (docs/REBUILD.md).

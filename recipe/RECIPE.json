@@ -1,11 +1,11 @@
 {
  "schema": "readystack.recipe.v1",
  "slug": "crowdsec",
- "tag": "v1.8.2-CE-ubuntu24.04-r6",
- "tarball": "ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r6.tar.gz",
- "tarball_sha256": "b6f38732da554b1abdff0a299d0720d498af5af16ccb150abd4ebcc051d143a2",
- "kit_root": "v1.8.2-CE-ubuntu24.04-r6",
- "generated_at": "2026-11-25T00:36:29Z",
+ "tag": "v1.8.2-CE-ubuntu24.04-r7",
+ "tarball": "ReadyStack-crowdsec-v1.8.2-CE-ubuntu24.04-r7.tar.gz",
+ "tarball_sha256": "9c87558d9d74123660eb056ac9353b6dd697dde2d61f2a4bdc77873a62d152e1",
+ "kit_root": "v1.8.2-CE-ubuntu24.04-r7",
+ "generated_at": "2026-11-28T00:23:31Z",
  "generator": "KitForge release/recipe_publish.py",
  "dockerfile": "Dockerfile.offline.pinned",
  "build_script": "BUILD_OFFLINE.sh",
@@ -45,14 +45,14 @@
    ]
   },
   "build_method": "source-rebuild-go",
-  "source_date_epoch": 1795543176,
-  "source_date_epoch_utc": "2026-11-24T17:59:36Z",
+  "source_date_epoch": 1795672783,
+  "source_date_epoch_utc": "2026-11-26T05:59:43Z",
   "target": {
-   "image_manifest_digest": "sha256:1be80cc031999af5a8c5425f0d9e526fff90f48075ffb176294787ec5c761709",
-   "config_digest": "sha256:4d4012ecfda60c5e7f99d671a8a46c4f1069c6c15d09dc529dad3cbd3ee4e6d2",
-   "image": "readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r6"
+   "image_manifest_digest": "sha256:507e3baa7d02303f47b4d5e8af70451ce47bcd454bb1775f9fed167cf2de30cb",
+   "config_digest": "sha256:93de3ab1341fbebf2b94a9837019af212f1a620aef5fd5e58e34f80e2165492f",
+   "image": "readystack/crowdsec:v1.8.2-CE-ubuntu24.04-r7"
   },
-  "checksummed_files": 17416
+  "checksummed_files": 17417
  },
  "files": [
   {
@@ -72,9 +72,9 @@
   },
   {
    "path": "CHECKSUMS.sha256",
-   "size": 2535943,
-   "sha256": "67ab192ee6f3133576147e9769d1da8552163d40400ed9c074cc085c1cbddf7c",
-   "lines": 17416,
+   "size": 2536042,
+   "sha256": "db3e6f41358a87aaffbbab1c2b85dc684259a85855f015470b4e05f99acee7b0",
+   "lines": 17417,
    "public": "account",
    "stored": "gzip"
   },
@@ -87,23 +87,23 @@
   },
   {
    "path": "Dockerfile",
-   "size": 4701,
-   "sha256": "784313c27cad0c82d40ea0302093f0a860409a0d1e02105ae2b33e347802ab4e",
-   "lines": 50,
+   "size": 5031,
+   "sha256": "d6164a4e1547d3d2623de7b94686ef32cb4a51bde2185a622aee3afee5e98fb9",
+   "lines": 54,
    "public": "account"
   },
   {
    "path": "Dockerfile.offline",
-   "size": 4701,
-   "sha256": "784313c27cad0c82d40ea0302093f0a860409a0d1e02105ae2b33e347802ab4e",
-   "lines": 50,
+   "size": 5031,
+   "sha256": "d6164a4e1547d3d2623de7b94686ef32cb4a51bde2185a622aee3afee5e98fb9",
+   "lines": 54,
    "public": "account"
   },
   {
    "path": "Dockerfile.offline.pinned",
-   "size": 4701,
-   "sha256": "784313c27cad0c82d40ea0302093f0a860409a0d1e02105ae2b33e347802ab4e",
-   "lines": 50,
+   "size": 5031,
+   "sha256": "d6164a4e1547d3d2623de7b94686ef32cb4a51bde2185a622aee3afee5e98fb9",
+   "lines": 54,
    "public": "preview",
    "preview_lines": 24
   },
@@ -116,38 +116,38 @@
   },
   {
    "path": "FILE_MODES.tsv",
-   "size": 1610771,
-   "sha256": "f1fff781080e78644f93dc60f04114bf1a9675a12aa88ed79e9efae58dee5acd",
-   "lines": 20198,
+   "size": 1610806,
+   "sha256": "a579bf215e9c1b8e7b957cd8fd4a78ca8aea95ce143c40dc02d64d759426da63",
+   "lines": 20199,
    "public": "account",
    "stored": "gzip"
   },
   {
    "path": "MANIFEST.txt",
-   "size": 1351685,
-   "sha256": "776fe828ead9584e8b0c0003f9fdf73cdfcf37268af02e748c2390089d777e34",
-   "lines": 17418,
+   "size": 1351716,
+   "sha256": "94d5dde454eae699fbf590c1e5a70f8448aee7242c77282050826edf2aaeb0cb",
+   "lines": 17419,
    "public": "account",
    "stored": "gzip"
   },
   {
    "path": "README.md",
-   "size": 3297,
-   "sha256": "f3184789a20bba4d73908dc1f0b93bde45a2c81cf90cf083dc0340bcd0458b3d",
-   "lines": 39,
+   "size": 3481,
+   "sha256": "5350939d2aaed7495a99c6212d023d4edbf71138172d0c45de175ef4c84948be",
+   "lines": 41,
    "public": "account"
   },
   {
    "path": "SOURCE_DATE_EPOCH.txt",
    "size": 11,
-   "sha256": "0731527cbffdc2190cc088c53fc02af6ff98b2fbd771de80147765d15d273f40",
+   "sha256": "67b3469337c212549912fb6d1df6163a314f71376f0e9c5d5120328258773beb",
    "lines": 1,
    "public": "full"
   },
   {
    "path": "TARGET_DIGEST.txt",
    "size": 282,
-   "sha256": "a367c01242349a6873d3717cf25b941d4e683eb6db885ea65508d2711ae351a7",
+   "sha256": "ff737ba94db3f3895959d8ca988d5fbdf4c3e495f4c1ec49874a9558ed99488e",
    "lines": 6,
    "public": "full"
   },
@@ -175,21 +175,21 @@
   {
    "path": "docs/PROVENANCE.md",
    "size": 2558,
-   "sha256": "f18ed05f083a653017cc0964aa9e1d434af200012a8ec7c0e52bfa0521de073b",
+   "sha256": "77e6ffcc458a8f1f58515899d1e27092349f4d2c91b7dc0da0014a3d11f7fcf1",
    "lines": 36,
    "public": "account"
   },
   {
    "path": "docs/REBUILD.md",
-   "size": 6105,
-   "sha256": "7c1c3f203555a9493cd6337840f848a0fcb3c15211f5960ab721b06118b1267f",
+   "size": 6103,
+   "sha256": "9d528be7878e9c1548a6aaf8d643cab69e81fcb0af5fe3329cb8396c3bd2b41c",
    "lines": 60,
    "public": "account"
   },
   {
    "path": "docs/VERIFY.md",
    "size": 2034,
-   "sha256": "674ea07bf941b7dce44e9918090ea15260815f5c249da61cef057564b2495dba",
+   "sha256": "ca9dec0775b8532289013ce1b849c5105c362b726976a7c1475101340996b9fe",
    "lines": 34,
    "public": "account"
   },
@@ -203,7 +203,7 @@
   {
    "path": "docs/provenance/BUILD_RECIPE.json",
    "size": 7575,
-   "sha256": "34c7344a90f555062ecd697c9c08084d73d675a234e3b09fb16b19ed792e287c",
+   "sha256": "12d2bf2e4074d21ad92d5c5de3c64d282d242facc8d54a1a3b71d610e1e0b6b5",
    "lines": 80,
    "redactions": [
     {
@@ -211,7 +211,7 @@
      "kind": "internal host"
     }
    ],
-   "kit_sha256": "262ce2e26be2d0012e04182914cb8ab816c9228c82b0292cf923c7aec879f627",
+   "kit_sha256": "ac56a3b31ee062560fec676f5a6cbff535106815911c1d3c0b695e47bf7dd3da",
    "kit_size": 7555,
    "public": "account"
   },
@@ -245,9 +245,9 @@
   },
   {
    "path": "docs/provenance/TOOLCHAIN.lock",
-   "size": 6320,
-   "sha256": "6882d4bfe7876866ad4bd075bdbc4ea9844246abc021cbc06134320b9acd555c",
-   "lines": 164,
+   "size": 7020,
+   "sha256": "326430f07957d7864fde16bbac43ebf2041ff6c00b0dbb1de3cf39d477fb263b",
+   "lines": 184,
    "public": "account"
   },
   {
@@ -267,7 +267,7 @@
   {
    "path": "rebuild.json",
    "size": 1435,
-   "sha256": "dc2e09e8f204f6523dd0d20a500a5c51fd048a85f8271130e41ef651971d18a7",
+   "sha256": "090bb68a223d01c2a0baf22608578c873aae841537d5462eca76cbb6b7c19d4e",
    "lines": 38,
    "public": "account"
   },
@@ -293,8 +293,8 @@
    "bytes": 330489911
   },
   "docs": {
-   "files": 1853,
-   "bytes": 14866843
+   "files": 1854,
+   "bytes": 14879445
   },
   "toolchain": {
    "files": 1,
@@ -302,7 +302,7 @@
   },
   "vendored": {
    "files": 15517,
-   "bytes": 284906497
+   "bytes": 284907683
   }
  },
  "redacted_files": 1
